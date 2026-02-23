@@ -2,27 +2,28 @@
 import React, { useRef, useEffect } from 'react';
 import { Particle } from '../types';
 
+const TRAIL_LENGTH = 15;
+
 const GravityCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
   const mouse = useRef({ x: 0, y: 0, active: false });
 
   const createParticles = (width: number, height: number) => {
-    const count = Math.min(Math.floor((width * height) / 2000), 150);
+    const count = Math.min(Math.floor((width * height) / 8000),20);
     const newParticles: Particle[] = [];
     
     for (let i = 0; i < count; i++) {
-      const hue = Math.floor(Math.random() * 360);
+      const hue = 180 + Math.random() * 100; // Cyan to Purple range
       newParticles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        size: Math.random() * 3 + 2,
-        color: `hsla(${hue}, 90%, 65%, 0.9)`,
-        angle: Math.random() * Math.PI * 2,
-        // Using distance as a preferred orbital radius
-        distance: Math.random() * 100 + 100 
+        vx: (Math.random() - 0.5) * 4,
+        vy: (Math.random() - 0.5) * 4,
+        size: Math.random() * 2 + 2, // Back to smaller dot sizes
+        color: `hsla(${hue}, 90%, 65%, 1)`,
+        distance: Math.random() * 100 + 100,
+        history: []
       });
     }
     particles.current = newParticles;
@@ -31,7 +32,6 @@ const GravityCanvas: React.FC = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -57,40 +57,40 @@ const GravityCanvas: React.FC = () => {
     let animationId: number;
 
     const animate = () => {
-      // Create a deeper trail for more "flow"
-      ctx.fillStyle = 'rgba(3, 7, 18, 0.12)'; 
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // Semi-transparent background for trails
+      ctx.clearRect(0, 0, canvas.width, canvas.height); 
 
       particles.current.forEach(p => {
+        // Trail History
+        p.history.push({ x: p.x, y: p.y });
+        if (p.history.length > TRAIL_LENGTH) p.history.shift();
+
         if (mouse.current.active) {
           const dx = p.x - mouse.current.x;
           const dy = p.y - mouse.current.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           
-          if (dist < 600) {
+          if (dist < 500) {
             // Orbital Physics
-            // 1. Centripetal Force (Pull towards center/orbit ring)
             const targetRadius = p.distance;
             const distError = dist - targetRadius;
-            const pullStrength = 0.0020;
-            p.vx -= dx * pullStrength * (distError / 100);
-            p.vy -= dy * pullStrength * (distError / 100);
+            
+            // Centripetal
+            const pullStrength = 0.002;
+            p.vx -= dx * pullStrength * (distError / 50);
+            p.vy -= dy * pullStrength * (distError / 50);
 
-            // 2. Tangential Force (Rotation)
-            // Perpendicular vector to (dx, dy) is (-dy, dx)
-            const orbitSpeed = 0.1;
-            const speedFactor = Math.max(0.1, (600 - dist) / 600);
+            // Tangential (Rotation)
+            const orbitSpeed = 0.2;
+            const speedFactor = Math.max(0.1, (800 - dist) / 800);
             p.vx += (-dy / dist) * orbitSpeed * speedFactor;
             p.vy += (dx / dist) * orbitSpeed * speedFactor;
           }
-          
-          // Friction to prevent infinite acceleration
-          p.vx *= 0.98;
-          p.vy *= 0.98;
+          p.vx *= 0.985;
+          p.vy *= 0.985;
         } else {
-          // Idle floating movement
-          p.vx += (Math.random() - 0.5) * 0.05;
-          p.vy += (Math.random() - 0.5) * 0.05;
+          p.vx += (Math.random() - 0.5) * 0.1;
+          p.vy += (Math.random() - 0.5) * 0.1;
           p.vx *= 0.995;
           p.vy *= 0.995;
         }
@@ -98,23 +98,39 @@ const GravityCanvas: React.FC = () => {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Soft boundaries
+        // Wrap Screen
         if (p.x < -50) p.x = canvas.width + 50;
         if (p.x > canvas.width + 50) p.x = -50;
         if (p.y < -50) p.y = canvas.height + 50;
         if (p.y > canvas.height + 50) p.y = -50;
 
-        // Draw particle with enhanced neon glow
+        // Draw Trail (as lines for smoother visual)
+        if (p.history.length > 1) {
+          ctx.beginPath();
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          for (let i = 0; i < p.history.length - 1; i++) {
+            const opacity = (i / p.history.length) * 0.5;
+            const point = p.history[i];
+            const nextPoint = p.history[i + 1];
+            
+            ctx.beginPath();
+            ctx.moveTo(point.x, point.y);
+            ctx.lineTo(nextPoint.x, nextPoint.y);
+            ctx.lineWidth = p.size * (i / p.history.length);
+            ctx.strokeStyle = p.color.replace('1)', `${opacity})`);
+            ctx.stroke();
+          }
+        }
+
+        // Draw Main Head
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 0;
         ctx.shadowColor = p.color;
         ctx.fill();
-        ctx.closePath();
-        
-        // Optional: Draw subtle connections between particles that are close
-        // (Removed to keep the "revolving dots" focus cleaner)
+        ctx.shadowBlur = 0;
       });
 
       animationId = requestAnimationFrame(animate);
@@ -130,12 +146,7 @@ const GravityCanvas: React.FC = () => {
     };
   }, []);
 
-  return (
-    <canvas 
-      ref={canvasRef} 
-      className="absolute inset-0 z-0 pointer-events-none"
-    />
-  );
+  return <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none" />;
 };
 
 export default GravityCanvas;

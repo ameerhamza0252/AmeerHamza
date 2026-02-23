@@ -6,11 +6,18 @@ export interface Particle {
   vy: number;
   size: number;
   color: string;
-  angle: number;
   distance: number;
+  history: { x: number; y: number }[];
 }
 
 export interface HeroContent {
   headline: string;
   subheadline: string;
+}
+
+export interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  link: string;
 }
