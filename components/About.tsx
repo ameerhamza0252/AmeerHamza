@@ -1,4 +1,5 @@
 
+import { url } from 'inspector';
 import React from 'react';
 
 const techStack = [
@@ -38,7 +39,7 @@ const About: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 rounded-[3rem] blur-2xl" />
           <div className="relative h-full w-full bg-white/5 border border-white/10 rounded-[3rem] backdrop-blur-sm p-12 flex flex-col justify-center items-center text-center">
             <div className="text-8xl mb-8">
-              <img src="./public/200.webp" alt="Profile" className="rounded-md w-50 h-40 object-cover" />
+              <img src={"https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2RsbThuN3oyczR1N3NjdWQwZnJidWIwcnh2bW1uYWg0Z2toeTBtciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QXwtfadqo7wbfmT46H/giphy.gif"} alt="Profile" className="rounded-md w-50 h-40 object-cover" />
               </div>
             <h3 className="text-2xl font-bold text-white mb-4">Engineering Excellence</h3>
             <p className="text-gray-400">Transforming complex problems into elegant, user-centric solutions through modern software architecture.</p>
