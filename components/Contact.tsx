@@ -3,14 +3,14 @@ import React from 'react';
 
 const Contact: React.FC = () => {
   return (
-    <section id="contact" className="py-32 px-8 bg-gray-950 relative overflow-hidden">
+    <section id="contact" className="py-32 px-8 bg-gray-950 relative">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <h2 className="text-5xl md:text-8xl font-black text-white mb-12 tracking-tighter">
           READY TO <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">COLLABORATE?</span>
+          <h4 className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 text-4xl md:text-8xl">COLLABORATE?</h4>
         </h2>
         
         <p className="text-xl text-gray-400 mb-16 max-w-2xl mx-auto leading-relaxed">
@@ -19,19 +19,17 @@ const Contact: React.FC = () => {
 
         <div className="flex flex-col items-center gap-12">
           <a 
-            href="mailto:hello@ameerhamza.dev" 
+            href="mailto:ameerhamza0252@icloud.com" 
             className="group relative text-3xl md:text-6xl font-bold text-white transition-all duration-300"
           >
-            <span className="relative z-10">hello@ameerhamza.dev</span>
+            <span className="relative z-10 w-full">hello@ameerhamza</span>
             <div className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:w-full transition-all duration-500" />
           </a>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-2xl mt-8">
             {[
-              { label: 'LinkedIn', url: '#' },
-              { label: 'GitHub', url: '#' },
-              { label: 'Twitter', url: '#' },
-              { label: 'Instagram', url: '#' }
+              { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ameer-hamza-b7804523b/' },
+              { label: 'GitHub', url: 'https://github.com/ameerhamza0252' },
             ].map(social => (
               <a 
                 key={social.label} 

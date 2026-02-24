@@ -10,7 +10,7 @@ const GravityCanvas: React.FC = () => {
   const mouse = useRef({ x: 0, y: 0, active: false });
 
   const createParticles = (width: number, height: number) => {
-    const count = Math.min(Math.floor((width * height) / 8000),20);
+    const count = Math.min(Math.floor((width * height) / 8000),30);
     const newParticles: Particle[] = [];
     
     for (let i = 0; i < count; i++) {

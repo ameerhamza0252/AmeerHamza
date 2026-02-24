@@ -31,7 +31,7 @@ const App: React.FC = () => {
               AMEER<span className="text-cyan-400">.</span>
             </div>
             <p className="text-gray-500 text-sm font-mono tracking-widest uppercase">
-              Handcrafted with Next.js & TypeScript
+              Handcrafted with React.js & TypeScript
             </p>
           </div>
           

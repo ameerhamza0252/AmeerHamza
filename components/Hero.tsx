@@ -4,15 +4,14 @@ import GravityCanvas from './GravityCanvas';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-gray-950 px-4">
+    <section className="relative w-full h-screen flex flex-col items-center justify-center bg-gray-950 px-4 py-16 overflow-hidden">
       <GravityCanvas />
-      
-      <div className="relative z-10 text-center max-w-5xl">
+      <div className="relative z-10 text-center max-w-5xl bg-white/5 border border-white/10 rounded-[3rem] backdrop-blur-sm  rounded-3xl p-8">
         <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
-          <span className="text-cyan-400 font-mono text-xs font-bold tracking-widest uppercase">Software Engineer</span>
+          <span className="text-cyan-400 font-mono font-bold sm:text-sm tracking-widest uppercase">Full Stack Developer</span>
         </div>
         
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white leading-tight mb-8 tracking-tighter">
+        <h1 className="text-5xl md:text-8xl lg:text-9xl font-black text-white leading-tight mb-8 tracking-tighter">
           AMEER <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">HAMZA</span>
         </h1>
         

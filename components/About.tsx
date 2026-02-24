@@ -34,21 +34,23 @@ const About: React.FC = () => {
           </div>
         </div>
         
-        <div className="relative aspect-square">
+        <div className="relative h-full w-full">
           <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 rounded-[3rem] blur-2xl" />
           <div className="relative h-full w-full bg-white/5 border border-white/10 rounded-[3rem] backdrop-blur-sm p-12 flex flex-col justify-center items-center text-center">
-            <div className="text-8xl mb-8"><img src="./200.webp" alt="Profile" className="rounded-md w-40 h-40 object-cover" /></div>
+            <div className="text-8xl mb-8">
+              <img src="./public/200.webp" alt="Profile" className="rounded-md w-50 h-40 object-cover" />
+              </div>
             <h3 className="text-2xl font-bold text-white mb-4">Engineering Excellence</h3>
             <p className="text-gray-400">Transforming complex problems into elegant, user-centric solutions through modern software architecture.</p>
             
-            <div className="mt-12 grid grid-cols-3 gap-8 w-full">
+            <div className="mt-12 grid grid-cols-2 gap-8 w-full">
               <div>
-                <div className="text-3xl font-black text-white">Multiple</div>
-                <div className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Projects</div>
+                <div className="text-3xl font-black text-white">10+</div>
+                <div className="text-[12px]  uppercase tracking-widest text-gray-500 font-bold">Projects</div>
               </div>
               <div>
                 <div className="text-3xl font-black text-white">100%</div>
-                <div className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Uptime</div>
+                <div className="text-[12px] uppercase tracking-widest text-gray-500 font-bold">Uptime</div>
               </div>
             </div>
           </div>
